@@ -1,0 +1,41 @@
+---
+title: "masters poster"
+author: "James Lee"
+date: "4/20/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+Predicting Book Ratings using Regression Methods
+
+Analysis paralysis occurs when overthinking a situation stops a solution from being reached.
+It can happen in situations where the number of choices is so large that it
+is difficult to reason about.
+For example, trying to figure out the next book to read can be difficult because the catalog 
+of all possible books is very large, and this can result in one never choosing a book at all.
+Creating a model to predict a user's rating of a book can alleviate this difficulty of choice.
+In this project, we create a book rating prediction model that can be used to recommend
+a new book to read.
+
+```{r}
+book_data <- read.csv("toptags10/book_data.csv")
+ratings <- read.csv("goodbooks-10k/ratings.csv")
+user_data <- 
+  ratings %>% 
+  filter(user_id == 30944) %>% 
+  merge(book_data, by = "book_id") %>% 
+  select(-c(book_id, user_id, goodreads_book_id))
+```
+
+```{r}
+lm10 <- lm(rating ~ 0 + ., data=user_data, )
+summary(lm10)
+```
+
